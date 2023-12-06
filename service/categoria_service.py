@@ -1,6 +1,7 @@
 from dao.categoria_dao import CategoriaDAO
 from model.categoria import Categoria
 
+
 class CategoriaService:
 
     def __init__(self):
@@ -12,11 +13,11 @@ class CategoriaService:
 
     def menu(self):
         print('[Categorias] Escolha uma das seguintes opções:\n'
-                '1 - Listar todas as categorias\n'
-                '2 - Adicionar nova categoria\n'
-                '3 - Excluir categoria\n'
-                '4 - Ver categoria por Id\n'
-                '0 - Voltar ao menu anterior\n')
+              '1 - Listar todas as categorias\n'
+              '2 - Adicionar nova categoria\n'
+              '3 - Excluir categoria\n'
+              '4 - Ver categoria por Id\n'
+              '0 - Voltar ao menu anterior\n')
         escolha = input('Digite a opção: ')
 
         if escolha == '0':
@@ -54,9 +55,8 @@ class CategoriaService:
         print('\nAdicionando categoria...')
 
         try:
-            id = self.__categoria_dao.ultimo_id() + 1
             nome = input('Digite o nome da categoria: ')
-            nova_categoria = Categoria(id, nome)
+            nova_categoria = Categoria(nome)
             self.__categoria_dao.adicionar(nova_categoria)
             print('Categoria adicionada com sucesso!')
         except Exception as e:
@@ -69,7 +69,8 @@ class CategoriaService:
         print('\nRemovendo categoria...')
 
         try:
-            categoria_id = int(input('Digite o ID da categoria para excluir: '))
+            categoria_id = int(
+                input('Digite o ID da categoria para excluir: '))
             if (self.__categoria_dao.remover(categoria_id)):
                 print('Categoria excluída com sucesso!')
             else:
@@ -77,7 +78,7 @@ class CategoriaService:
         except Exception as e:
             print(f'Erro ao excluir categoria! - {e}')
             return
-        
+
         input('Pressione uma tecla para continuar...')
 
     def mostrar_por_id(self):
@@ -90,9 +91,9 @@ class CategoriaService:
             if (cat == None):
                 print('Categoria não encontrada!')
             else:
-                print(f'Id: {cat.id} | Categoria: {cat.nome}')    
+                print(f'Id: {cat.id} | Categoria: {cat.nome}')
         except Exception as e:
             print(f'Erro ao exibir categoria! - {e}')
-            return     
-        
+            return
+
         input('Pressione uma tecla para continuar...')
