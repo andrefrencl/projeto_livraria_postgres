@@ -1,7 +1,7 @@
 class Autor:
 
-    def __init__(self, id: int, nome: str, email: str, telefone: str, bio: str):
-        self.__id: int = id
+    def __init__(self, nome: str, email: str, telefone: str, bio: str):
+        self.__id: int = 0
         self.__nome: str = nome
         self.__email: str = email
         self.__telefone: str = telefone
@@ -10,7 +10,7 @@ class Autor:
     @property
     def id(self) -> int:
         return self.__id
-    
+
     @id.setter
     def id(self, id: int):
         self.__id = id

@@ -1,6 +1,7 @@
 from dao.editora_dao import EditoraDAO
 from model.editora import Editora
 
+
 class EditoraService:
 
     def __init__(self):
@@ -12,11 +13,11 @@ class EditoraService:
 
     def menu(self):
         print('[Editoras] Escolha uma das seguintes opções:\n'
-                '1 - Listar todas as editoras\n'
-                '2 - Adicionar nova editora\n'
-                '3 - Excluir editora\n'
-                '4 - Ver categoria por Id\n'
-                '0 - Voltar ao menu anterior\n')
+              '1 - Listar todas as editoras\n'
+              '2 - Adicionar nova editora\n'
+              '3 - Excluir editora\n'
+              '4 - Ver categoria por Id\n'
+              '0 - Voltar ao menu anterior\n')
         escolha = input('Digite a opção: ')
 
         if escolha == '0':
@@ -43,7 +44,8 @@ class EditoraService:
                 print('Nenhuma editora encontrada!')
 
             for editora in editoras:
-                print(f'{editora.id} | {editora.nome} | {editora.endereco} | {editora.telefone}')
+                print(f'{editora.id} | {editora.nome} | {
+                      editora.endereco} | {editora.telefone}')
         except Exception as e:
             print(f'Erro ao exibir as editoras! - {e}')
             return
@@ -54,11 +56,10 @@ class EditoraService:
         print('\nAdicionando editora...')
 
         try:
-            id = self.__editora_dao.ultimo_id() + 1
             nome = input('Digite o nome da editora: ')
             endereco = input('Digite o endereço da editora: ')
             telefone = input('Digite o telefone da editora: ')
-            nova_editora = Editora(id, nome, endereco, telefone)
+            nova_editora = Editora(nome, endereco, telefone)
 
             self.__editora_dao.adicionar(nova_editora)
             print('Editora adicionada com sucesso!')
@@ -80,7 +81,7 @@ class EditoraService:
         except Exception as e:
             print(f'Erro ao excluir editora! - {e}')
             return
-        
+
         input('Pressione uma tecla para continuar...')
 
     def mostrar_por_id(self):
@@ -93,9 +94,10 @@ class EditoraService:
             if (edt == None):
                 print('Editora não encontrada!')
             else:
-                print(f'{edt.id} | {edt.nome} | {edt.endereco} | {edt.telefone}')
+                print(f'{edt.id} | {edt.nome} | {
+                      edt.endereco} | {edt.telefone}')
         except Exception as e:
             print(f'Erro ao exibir editora! - {e}')
-            return     
-        
+            return
+
         input('Pressione uma tecla para continuar...')
