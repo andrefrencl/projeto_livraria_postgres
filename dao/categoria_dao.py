@@ -23,22 +23,42 @@ class CategoriaDAO:
         return categorias
 
     def adicionar(self, categoria: Categoria) -> None:
-        self.__categorias.append(categoria)
+        conexao = self.__conexao_factory.get_conexao()
+        cursor = conexao.cursor()
+        cursor.execute('''
+            insert into categorias (nome) values (%(nome)s)
+            ''',
+                       ({'nome': categoria.nome, })
+                       )
+        # 'insert into categorias (nome) values (%(nome)s, %(nome)s) ')
+        conexao.commit()
+        cursor.close()
+        conexao.close()
 
     def remover(self, categoria_id: int) -> bool:
-        encontrado = False
-        for c in self.__categorias:
-            if (c.id == categoria_id):
-                index = self.__categorias.index(c)
-                self.__categorias.pop(index)
-                encontrado = True
-                break
-        return encontrado
+        conexao = self.__conexao_factory.get_conexao()
+        cursor = conexao.cursor()
+        cursor.execute('delete from categorias where id=%s', (categoria_id,))
+        removidas = cursor.rowcount
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+        if removidas == 0:
+            return False
+        else:
+            return True
 
     def buscar_por_id(self, categoria_id) -> Categoria:
         cat = None
-        for c in self.__categorias:
-            if (c.id == categoria_id):
-                cat = c
-                break
+        conexao = self.__conexao_factory.get_conexao()
+        cursor = conexao.cursor()
+        cursor.execute(
+            'select id, nome from categorias where id = %s', (categoria_id,))
+        resultado = cursor.fetchone()  # se vier só um resultado, é fetchone
+        # fechall se vier uma lista
+        if resultado:
+            cat = Categoria(resultado[1])
+            cat.id = resultado[0]
+        cursor.close()
+        conexao.close()
         return cat
